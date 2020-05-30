@@ -1,4 +1,5 @@
 import mysql.connector
+from uuid import uuid4
 
 config = {
   'user': 'root',
@@ -12,9 +13,10 @@ connection = mysql.connector.connect(**config)
 
 cursor = connection.cursor()
 
-sql = "INSERT INTO orders ( userId, name, dish ) VALUES ( %s, %s, %s )"
-val = [(5, "Sreekar", "Idli")]
+sql = "select * from customer where userId = %s"
+val = 5
 
-cursor = connection.cursor()
-cursor.executemany(sql, val)
-connection.commit()
+cursor.execute(sql, (val,))
+result = cursor
+
+print(result.fetchall()[0][0])

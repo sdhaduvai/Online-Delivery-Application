@@ -18,7 +18,6 @@ global cursor
 connection = mysql.connector.connect(**config)
 cursor = connection.cursor()
 
-
 def db_entry(val):
     sql = "INSERT INTO orders ( userId, name, dish ) VALUES ( %s, %s, %s )"
     cursor.executemany(sql, val)
