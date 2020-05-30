@@ -1,0 +1,4 @@
+kafka-python
+requests
+flask
+mysql-connector-python
