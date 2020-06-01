@@ -4,11 +4,12 @@ import requests
 import datetime
 import json
 from uuid import uuid4
+import mysql.connector
 
 config = {
     'user': 'root',
     'password': 'root_password',
-    'host': '127.0.0.1',
+    'host': 'mysql',
     'database': 'test_db',
     'raise_on_warnings': True
 }
@@ -30,8 +31,8 @@ def update_status(val):
 app = Flask(__name__)
 
 # To consume latest messages and auto-commit offsets
-@app.route('/create_restaurent', methods=["Post"])
-def main():
+@app.route('/restaurant/create', methods=["Post"])
+def create():
     content = request.data
     post_json = json.loads(content)
 
@@ -44,19 +45,16 @@ def main():
     return make_response(jsonify(my_response), 200)
 
 # To consume latest messages and auto-commit offsets
-@app.route('/update_status', methods=["Post"])
-def main():
-    content = request.data
-    post_json = json.loads(content)
+@app.route('/restaurant/update', methods=["Put"])
+def update():
+    orderId = request.args.get('orderId')
+    status =  request.args.get('status')
 
-    uuid = post_json['orderId']
-    new_status = post_json['status']
+    status = update_status([orderId, status])
 
-    status = update_status([uuid, new_status])
-
-    post_json = {'orderId': uuid, 'status': status, 'response': 'success'}
+    post_json = {'orderId': orderId, 'status': status, 'response': 'success'}
     my_response = post_json
     return make_response(jsonify(my_response), 200)
 
 if __name__ == '__main__':
-    app.run(debug=True, port=7006, host='0.0.0.0')
+    app.run(debug=True, port=7005, host='0.0.0.0')
