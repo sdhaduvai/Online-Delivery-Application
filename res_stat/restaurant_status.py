@@ -24,13 +24,13 @@ def create_restaurent(val):
     connection.commit()
 
 def update_status(val):
-    sql = "update table orders set status = %s where uuid = %s"
+    sql = "update orders set status = %s where uuid = %s"
     cursor.executemany(sql, val)
     connection.commit()
 
 app = Flask(__name__)
 
-# To consume latest messages and auto-commit offsets
+# To create new restaurant entries in the database
 @app.route('/restaurant/create', methods=["Post"])
 def create():
     content = request.data
@@ -44,17 +44,18 @@ def create():
     my_response = post_json
     return make_response(jsonify(my_response), 200)
 
-# To consume latest messages and auto-commit offsets
+# To change the status of a customer's order
 @app.route('/restaurant/update', methods=["Put"])
 def update():
     orderId = request.args.get('orderId')
     status =  request.args.get('status')
 
-    status = update_status([orderId, status])
+
+    status = update_status([(status, orderId)])
 
     post_json = {'orderId': orderId, 'status': status, 'response': 'success'}
     my_response = post_json
     return make_response(jsonify(my_response), 200)
 
 if __name__ == '__main__':
-    app.run(debug=True, port=7005, host='0.0.0.0')
+    app.run(debug=True, port=7007, host='0.0.0.0')

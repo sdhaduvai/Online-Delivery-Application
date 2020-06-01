@@ -23,9 +23,10 @@ cursor = connection.cursor()
 def existing_customer(val):
     sql = "select * from customer where userId = %s"
     cursor.execute(sql, (val, ))
-    count = cursor.rowcount
-    if count == 0:
+
+    if len(cursor.fetchall()) == 0:
         return False
+
     return True
 
 def new_user_entry(val):
@@ -36,12 +37,13 @@ def new_user_entry(val):
 def check_order_status(val):
     sql = "select * from orders where uuid = %s"
     cursor.execute(sql, (val, ))
-    cursor.fetchall()
+    result = cursor.fetchall()
+    return result[0][3]
 
 app = Flask(__name__)
-# To consume latest messages and auto-commit offsets
+# To create a new order for a customer
 @app.route('/order/create', methods = ["Post"])
-def status():
+def create():
     content = request.data
     post_json = json.loads(content)
 
@@ -61,7 +63,7 @@ def status():
     my_response = post_json
     return make_response(jsonify(my_response), 200)
 
-# To consume latest messages and auto-commit offsets
+# To get the status of an order placed by a customer
 @app.route('/order/status', methods=["Get"])
 def status():
     orderId = request.args.get('orderId')

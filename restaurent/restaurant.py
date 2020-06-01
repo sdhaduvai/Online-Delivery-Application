@@ -19,6 +19,7 @@ global cursor
 connection = mysql.connector.connect(**config)
 cursor = connection.cursor()
 
+# Make an order entry in the database
 def db_entry(val):
     sql = "insert into orders(uuid, cust_id, rest_id, status, dish) VALUES (%s, %s, %s, %s, %s)"
     cursor.executemany(sql, val)
@@ -39,7 +40,7 @@ def main():
         name = my_json['name']
         dish = my_json['dish']
 
-        db_entry([(uuid, cust_id, rest_id, name, dish)])
+        db_entry([(uuid, cust_id, rest_id, "Created", dish)])
 
 if __name__ == '__main__':
     main()

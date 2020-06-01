@@ -13,10 +13,9 @@ connection = mysql.connector.connect(**config)
 
 cursor = connection.cursor()
 
-sql = "select * from customer where userId = %s"
-val = 5
+sql = "select * from orders where uuid = %s"
+val = '12dcfd85-22bd-4346-a3b0-ecfe2bf8995b'
 
 cursor.execute(sql, (val,))
-result = cursor
-
-print(result.fetchall()[0][0])
+result = cursor.fetchall()
+print(result[0][3])

@@ -6,6 +6,6 @@ COPY . /app
 
 RUN pip install -r requirements.txt
 
-EXPOSE 7005
+EXPOSE 7007
 
 CMD python restaurant_status.py
