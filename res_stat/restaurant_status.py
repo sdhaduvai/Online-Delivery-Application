@@ -19,7 +19,7 @@ connection = mysql.connector.connect(**config)
 cursor = connection.cursor()
 
 def create_restaurent(val):
-    sql = "INSERT INTO restaurent(rid, name) VALUES (%s, %s)"
+    sql = "INSERT INTO restaurant(rid, name) VALUES (%s, %s)"
     cursor.executemany(sql, val)
     connection.commit()
 
