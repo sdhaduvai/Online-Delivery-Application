@@ -29,12 +29,17 @@ services:
     depends_on:
       - zookeeper
 
-  restaurent:
-    image: 'restaurent'
+  restaurant:
+    image: 'restaurant'
+    networks:
+      - app-tier
+
+  restaurant_status:
+    image: 'restaurant_status'
     networks:
       - app-tier
     ports:
-      - '7005:7005'
+      - '7007:7007'
 
   buyer:
     image: 'buyer'
@@ -51,6 +56,9 @@ services:
       - app-tier
     ports:
       - '3306:3306'
+    command: --init-file /data/application/init.sql
+    volumes:
+        - ./init.sql:/data/application/init.sql
 
 volumes:
   zookeeper_data:
