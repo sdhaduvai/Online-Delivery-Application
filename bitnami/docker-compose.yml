@@ -37,9 +37,9 @@ services:
       - app-tier
     ports:
       - '3306:3306'
-    # command: --init-file /data/application/init.sql
-    # volumes:
-    #     - ./init.sql:/data/application/init.sql
+    command: --init-file /data/application/init.sql
+    volumes:
+        - ./init.sql:/data/application/init.sql
 
   restaurant:
     image: 'restaurant'
