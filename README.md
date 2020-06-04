@@ -38,21 +38,21 @@ docker-compose run restaurant python restaurant.py
 http://127.0.0.1:7007/restaurant/create
 ```
 <br/>
-{
-	"restId": 1,
-	"name": "Marriot"
-}
+{<br/>
+	"restId": 1,<br/>
+	"name": "Marriot"<br/>
+}<br/>
 
 2) Client API processes customer and their order, Method = ["Post"] - <br/>
 ```
 http://127.0.0.1:7006/order/create
 ```
 <br/>
-{
-	"restId": 1,
-	"userId": 1,
-	"name": "Sreekar",
-	"dish": "Chicken Sandwich"
+{<br/>
+	"restId": 1,<br/>
+	"userId": 1,<br/>
+	"name": "Sreekar",<br/>
+	"dish": "Chicken Sandwich"<br/>
 }
 
 3) Restaurant API can update the status of an order using its ID, Method = ["Put"] - <br/>
