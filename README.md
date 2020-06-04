@@ -39,10 +39,10 @@ http://127.0.0.1:7007/restaurant/create
 ```
 
 ```
-{<br/>
-	"restId": 1,<br/>
-	"name": "Marriot"<br/>
-}<br/>
+{
+	"restId": 1,
+	"name": "Marriot"
+}
 ```
 <br/>
 
@@ -51,11 +51,11 @@ http://127.0.0.1:7007/restaurant/create
 http://127.0.0.1:7006/order/create
 ```
 ```
-{<br/>
-	"restId": 1,<br/>
-	"userId": 1,<br/>
-	"name": "Sreekar",<br/>
-	"dish": "Chicken Sandwich"<br/>
+{
+	"restId": 1,
+	"userId": 1,
+	"name": "Sreekar",
+	"dish": "Chicken Sandwich"
 }
 ```
 <br/>
