@@ -38,6 +38,7 @@ def check_order_status(val):
     sql = "select * from orders where uuid = %s"
     cursor.execute(sql, (val, ))
     result = cursor.fetchall()
+    print(result)
     return result[0][3]
 
 app = Flask(__name__)
@@ -55,8 +56,7 @@ def create():
     if existing_customer(cust_id):
         uuid = str(uuid4())
     else:
-        new_user_entry([(cust_id, "name")])
-        uuid = str(uuid4())
+        new_user_entry([(cust_id, name)])
 
     producer.send('test', value = post_json)
 

@@ -18,7 +18,7 @@ connection = mysql.connector.connect(**config)
 
 cursor = connection.cursor()
 
-def create_restaurent(val):
+def create_restaurant(val):
     sql = "INSERT INTO restaurant(restId, name) VALUES (%s, %s)"
     cursor.executemany(sql, val)
     connection.commit()
@@ -39,7 +39,7 @@ def create():
     rest_id = post_json['restId']
     name = post_json['name']
 
-    create_restaurent([(rest_id, name)])
+    create_restaurant([(rest_id, name)])
 
     my_response = post_json
     return make_response(jsonify(my_response), 200)
@@ -50,8 +50,7 @@ def update():
     orderId = request.args.get('orderId')
     status =  request.args.get('status')
 
-
-    status = update_status([(status, orderId)])
+    update_status([(status, orderId)])
 
     post_json = {'orderId': orderId, 'status': status, 'response': 'success'}
     my_response = post_json

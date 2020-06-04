@@ -45,15 +45,6 @@ services:
     image: 'restaurant'
     networks:
       - app-tier
-    command: >
-      /bin/bash -c "
-        while ! nc -z web 3306;
-        do
-          echo sleeping;
-          sleep 1;
-        done;
-        echo Connected!;
-      "
 
   restaurant_status:
     image: 'restaurant_status'
@@ -61,15 +52,7 @@ services:
       - app-tier
     ports:
       - '7007:7007'
-    command: >
-      /bin/bash -c "
-        while ! nc -z web 3306;
-        do
-          echo sleeping;
-          sleep 1;
-        done;
-        echo Connected!;
-      "
+    
 
   buyer:
     image: 'buyer'
@@ -77,15 +60,6 @@ services:
       - app-tier
     ports:
       - '7006:7006'
-    command: >
-      /bin/bash -c "
-        while ! nc -z web 9092;
-        do
-          echo sleeping;
-          sleep 1;
-        done;
-        echo Connected!;
-      "
 
 volumes:
   zookeeper_data:

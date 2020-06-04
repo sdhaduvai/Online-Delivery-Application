@@ -30,9 +30,7 @@ def main():
     print("Consumer created")
 
     for message in consumer:
-        print("New message received")
         my_json = message.value
-        print(my_json)
 
         uuid = str(uuid4())
         cust_id = my_json['userId']
