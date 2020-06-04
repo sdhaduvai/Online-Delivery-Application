@@ -28,26 +28,7 @@ services:
       - ALLOW_PLAINTEXT_LISTENER=yes
     depends_on:
       - zookeeper
-
-  restaurant:
-    image: 'restaurant'
-    networks:
-      - app-tier
-
-  restaurant_status:
-    image: 'restaurant_status'
-    networks:
-      - app-tier
-    ports:
-      - '7007:7007'
-
-  buyer:
-    image: 'buyer'
-    networks:
-      - app-tier
-    ports:
-      - '7006:7006'
-
+  
   mysql:
     image: 'mysql:latest'
     environment: 
@@ -59,6 +40,52 @@ services:
     # command: --init-file /data/application/init.sql
     # volumes:
     #     - ./init.sql:/data/application/init.sql
+
+  restaurant:
+    image: 'restaurant'
+    networks:
+      - app-tier
+    command: >
+      /bin/bash -c "
+        while ! nc -z web 3306;
+        do
+          echo sleeping;
+          sleep 1;
+        done;
+        echo Connected!;
+      "
+
+  restaurant_status:
+    image: 'restaurant_status'
+    networks:
+      - app-tier
+    ports:
+      - '7007:7007'
+    command: >
+      /bin/bash -c "
+        while ! nc -z web 3306;
+        do
+          echo sleeping;
+          sleep 1;
+        done;
+        echo Connected!;
+      "
+
+  buyer:
+    image: 'buyer'
+    networks:
+      - app-tier
+    ports:
+      - '7006:7006'
+    command: >
+      /bin/bash -c "
+        while ! nc -z web 9092;
+        do
+          echo sleeping;
+          sleep 1;
+        done;
+        echo Connected!;
+      "
 
 volumes:
   zookeeper_data:
