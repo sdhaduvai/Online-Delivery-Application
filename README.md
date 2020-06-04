@@ -31,4 +31,38 @@ docker-compose run -p 7006:7006 buyer python buyer.py
 docker-compose run -p 7007:7007 restaurant_status python restaurant_status.py
 docker-compose run restaurant python restaurant.py
 ```
+---
+# REST API endpoints
+1) Restaurant API can create new restaurants, Method = ["Post"] - <br/>
+```
+http://127.0.0.1:7007/restaurant/create
+```
+<br/>
+{
+	"restId": 1,
+	"name": "Marriot"
+}
+
+2) Client API processes customer and their order, Method = ["Post"] - <br/>
+```
+http://127.0.0.1:7006/order/create
+```
+<br/>
+{
+	"restId": 1,
+	"userId": 1,
+	"name": "Sreekar",
+	"dish": "Chicken Sandwich"
+}
+
+3) Restaurant API can update the status of an order using its ID, Method = ["Put"] - <br/>
+```
+http://127.0.0.1:7007/restaurant/update?orderId=5e01fd47-ea56-495b-b618-9f22ef242424&status=ready
+```
+<br/>
+
+4) Client API gets the updated status, Method = ["Get"] - <br/>
+```
+http://127.0.0.1:7006/order/status?orderId=5e01fd47-ea56-495b-b618-9f22ef242424
+```
 
