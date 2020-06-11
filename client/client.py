@@ -43,18 +43,18 @@ def check_order_status(val):
 
 app = Flask(__name__)
 # To create a new order for a customer
-@app.route('/order/create', methods = ["Post"])
+@app.route('/order', methods = ["Post"])
 def create():
     content = request.data
     post_json = json.loads(content)
 
     cust_id = post_json['userId']
-    rest_id = post_json['restId']
+    restId = post_json['restaurant_id']
     name = post_json['name']
-    dish = post_json['dish']
+    dish = post_json['cust_order']
 
     if existing_customer(cust_id):
-        uuid = str(uuid4())
+        pass
     else:
         new_user_entry([(cust_id, name)])
 
@@ -64,12 +64,10 @@ def create():
     return make_response(jsonify(my_response), 200)
 
 # To get the status of an order placed by a customer
-@app.route('/order/status', methods=["Get"])
-def status():
-    orderId = request.args.get('orderId')
-
+@app.route('/order/status/<orderId>', methods=["Get"])
+def status(orderId):
     status = check_order_status(orderId)
-
+    print(status)
     post_json = {'orderId': orderId, 'status': status}
     my_response = post_json
     return make_response(jsonify(my_response), 200)

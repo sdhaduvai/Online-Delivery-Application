@@ -15,6 +15,7 @@ services:
       - ALLOW_ANONYMOUS_LOGIN=yes
     networks:
       - app-tier
+
   kafka:
     image: 'bitnami/kafka:2'
     ports:
@@ -40,11 +41,15 @@ services:
     command: --init-file /data/application/init.sql
     volumes:
         - ./init.sql:/data/application/init.sql
+    depends_on:
+      - kafka
 
   restaurant:
     image: 'restaurant'
     networks:
       - app-tier
+    depends_on:
+      - mysql
 
   restaurant_status:
     image: 'restaurant_status'
@@ -52,14 +57,17 @@ services:
       - app-tier
     ports:
       - '7007:7007'
-    
+    depends_on:
+      - restaurant
 
-  buyer:
-    image: 'buyer'
+  client:
+    image: 'client'
     networks:
       - app-tier
     ports:
       - '7006:7006'
+    depends_on:
+      - restaurant_status
 
 volumes:
   zookeeper_data:

@@ -30,14 +30,14 @@ def main():
     print("Consumer created")
 
     for message in consumer:
+        print("message received")
         my_json = message.value
 
         uuid = str(uuid4())
         cust_id = my_json['userId']
-        rest_id = my_json['restId']
+        rest_id = my_json['restaurant_id']
         name = my_json['name']
-        dish = my_json['dish']
-
+        dish = my_json['cust_order']
         db_entry([(uuid, cust_id, rest_id, "Created", dish)])
 
 if __name__ == '__main__':

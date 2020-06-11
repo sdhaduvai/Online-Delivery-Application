@@ -31,12 +31,12 @@ def update_status(val):
 app = Flask(__name__)
 
 # To create new restaurant entries in the database
-@app.route('/restaurant/create', methods=["Post"])
+@app.route('/restaurant', methods=["Post"])
 def create():
     content = request.data
     post_json = json.loads(content)
 
-    rest_id = post_json['restId']
+    rest_id = post_json['restaurant_id']
     name = post_json['name']
 
     create_restaurant([(rest_id, name)])
@@ -47,8 +47,11 @@ def create():
 # To change the status of a customer's order
 @app.route('/restaurant/update', methods=["Put"])
 def update():
-    orderId = request.args.get('orderId')
-    status =  request.args.get('status')
+    content = request.data
+    post_json = json.loads(content)
+
+    orderId = post_json['orderId']
+    status = post_json['status']
 
     update_status([(status, orderId)])
 
